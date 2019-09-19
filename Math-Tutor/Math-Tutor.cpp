@@ -6,6 +6,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <math.h>
 
 using namespace std;
 
@@ -58,6 +59,21 @@ int main()
 			num1 = rand() % 999 + 1;
 			num2 = rand() % 999 + 1;
 			answer = num1 + num2;
+			string displayAnswer = to_string(answer);
+			int length = strlen(displayAnswer.c_str());
+			string formattedAnswer;
+
+			if (length == 4) {
+				for (int i = 0; i < length; i++) {
+					if (i == 1) {
+						formattedAnswer += ",";
+					}
+					formattedAnswer += displayAnswer.at(i);
+				}
+			}
+			else {
+				formattedAnswer = displayAnswer;
+			}
 
 			cout << "\nSolve: ";
 			cout << "\n " << right << setw(7) << num1 << "\n+" << right << setw(7) << num2 << "\n--------\n     ";
@@ -72,7 +88,7 @@ int main()
 				cout << "\nINCORRECT!!!";
 			}
 
-			cout << "\n" << num1 << " plus " << num2 << " = " << answer << ".\n" << endl;
+			cout << "\n " << right << setw(7) << num1 << "\n+" << right << setw(7) << num2 << "\n--------\n" << right << setw(8) << formattedAnswer << endl << endl;
 		}
 		// Subtraction problem
 		else if (mode == "sub") {
@@ -94,7 +110,7 @@ int main()
 				cout << "\nINCORRECT!!!";
 			}
 
-			cout << "\n" << num1 << " minus " << num2 << " = " << answer << ".\n" << endl;
+			cout << "\n " << right << setw(7) << num1 << "\n-" << right << setw(7) << num2 << "\n--------\n" << right << setw(8) << answer << endl << endl;
 		}
 		// Multiplication problem
 		else if (mode == "mul") {
@@ -106,11 +122,31 @@ int main()
 			int length = strlen(displayAnswer.c_str());
 			string formattedAnswer;
 
-			for (int i = 0; i < length; i++) {
-				if (i % 3 == 0 && i != 0) {
-					formattedAnswer += ",";
+			switch (length) {
+			case 4:
+				for (int i = 0; i < length; i++) {
+					if (i == 1) {
+						formattedAnswer += ",";
+					}
+					formattedAnswer += displayAnswer.at(i);
 				}
-				formattedAnswer += displayAnswer.at(i);
+				break;
+			case 5:
+				for (int i = 0; i < length; i++) {
+					if (i == 2) {
+						formattedAnswer += ",";
+					}
+					formattedAnswer += displayAnswer.at(i);
+				}
+				break;
+			case 6:
+				for (int i = 0; i < length; i++) {
+					if (i % 3 == 0 && i != 0) {
+						formattedAnswer += ",";
+					}
+					formattedAnswer += displayAnswer.at(i);
+				}
+				break;
 			}
 
 			cout << "\nSolve: ";
@@ -126,17 +162,42 @@ int main()
 				cout << "\nINCORRECT!!!";
 			}
 
-			cout << "\n" << num1 << " times " << num2 << " = " << formattedAnswer << ".\n" << endl;
+			cout << "\n " << right << setw(7) << num1 << "\n*" << right << setw(7) << num2 << "\n--------\n" << right << setw(8) << answer << endl << endl;
 		}
 		// Division problem
 		else if (mode == "div") {
+		cout << setprecision(5);
 			cout << "You selected a division problem.";
 			double divNum1 = rand() % 999 + 1.00;
 			double divNum2 = rand() % 999 + 1.00;
-			answer = divNum1 / divNum2;
 
-			cout << "\n" << divNum1 << " divided by " << divNum2 << " = " << answer << ".\n" << endl;
+			bool goodDiv = false;
+			while (goodDiv == false) {
+				divNum2 = rand() % 999 + 1.00;
+
+				if (divNum2 < divNum1) {
+					goodDiv = true;
+				}
+			}
+
+			double divAnswer = divNum1 / divNum2;
+			double roundedAnswer = round(divAnswer);
+
+			cout << "\nSolve: (Round to 4 decimal places)";
+			cout << "\n " << right << setw(7) << divNum1 << "\n/" << right << setw(7) << divNum2 << "\n--------\n  ";
+
 			cin >> userInput;
+			double guess = stoi(userInput);
+			cout << guess << " ? " << roundedAnswer;
+
+			if (guess == roundedAnswer) {
+				cout << "\nCORRECT!!!";
+			}
+			else {
+				cout << "\nINCORRECT!!!";
+			}
+
+			cout << "\n " << right << setw(7) << divNum1 << "\n/" << right << setw(7) << divNum2 << "\n--------\n" << right << setw(8) << divAnswer << endl << endl;
 		}
 		// Catch-All
 		else {
