@@ -167,7 +167,7 @@ int main()
 		// Division problem
 		else if (mode == "div") {
 		cout << setprecision(5);
-			cout << "You selected a division problem.";
+			cout << "You selected a division problem." << endl;
 			double divNum1 = rand() % 999 + 1.00;
 			double divNum2 = rand() % 999 + 1.00;
 
@@ -187,8 +187,8 @@ int main()
 			cout << "\n " << right << setw(7) << divNum1 << "\n/" << right << setw(7) << divNum2 << "\n--------\n  ";
 
 			cin >> userInput;
-			double guess = stoi(userInput);
-			cout << guess << " ? " << roundedAnswer;
+			double guess = stod(userInput);
+			guess = round(guess);
 
 			if (guess == roundedAnswer) {
 				cout << "\nCORRECT!!!";
